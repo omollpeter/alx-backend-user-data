@@ -7,11 +7,13 @@ This module contains filter_datum function
 from typing import List
 import re
 import logging
+import os
+import mysql.connector
+from mysql.connector import connection
+
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class
-        """
-
+    """ Redacting Formatter class"""
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
@@ -32,6 +34,7 @@ class RedactingFormatter(logging.Formatter):
 #     for field in fields:
 #         message = re.sub(rf"{re.escape(field)}=.*?{re.escape(separator)}", f"{re.escape(field)}={redaction}{re.escape(separator)}", message)
 #     return message
+
 
 def filter_datum(fields, redaction, message, separator):
     """Returns obfuscated message"""
@@ -54,3 +57,22 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+
+def get_db() -> connection.MySQLConnection:
+    """Returns a MySQLConnection object to the database."""
+    # Retrieve database credentials from environment variables
+    username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
+
+    # Establish a connection to the database
+    db_connection = mysql.connector.connect(
+        user=username,
+        password=password,
+        host=host,
+        database=db_name
+    )
+    
+    return db_connection
