@@ -5,6 +5,7 @@ Contains hash_password function that encrypts a password
 
 import bcrypt
 
+
 def hash_password(password: str) -> bytes:
     """Hash a password with a salt using bcrypt."""
     salt = bcrypt.gensalt()  # Generate a salt
