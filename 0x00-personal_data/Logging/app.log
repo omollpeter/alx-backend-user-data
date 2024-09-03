@@ -1,0 +1,5 @@
+Error message in console and log file
+Error message in console and log file
+2024-09-02 06:05:50,411 - my_logger - ERROR - Error message in console and log file
+2024-09-02 06:14:50,821 - my_logger - ERROR - add_handler.py - Error message in console and log file
+2024-09-02 06:15:28,724 - my_logger - ERROR - add_handler.py - <module> - Error message in console and log file
