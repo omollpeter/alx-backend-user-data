@@ -11,4 +11,3 @@ class BasicAuth(Auth):
     """
     Implements Basic Authentication
     """
-    pass
