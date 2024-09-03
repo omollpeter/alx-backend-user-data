@@ -32,3 +32,11 @@ def auth_error_page():
     Displays page for all unathorized access
     """
     abort(401)
+
+
+@app_views.route("/forbidden", strict_slashes=False)
+def forbidden_page():
+    """
+    Display forbidden error page
+    """
+    abort(403)
