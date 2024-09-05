@@ -86,6 +86,9 @@ class BasicAuth(Auth):
         return user
 
     def current_user(self, request=None) -> TypeVar('User'):
+        """
+        Returns the current user from the authorization header
+        """
         if not request:
             return None
         auth_header = self.authorization_header(request)
