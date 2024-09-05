@@ -62,7 +62,7 @@ def executed_first():
 
     if not auth.require_auth(request.path, excluded_paths):
         return
-    if not auth.authorization_header:
+    if not auth.authorization_header():
         abort(401)
     if not auth.current_user(request):
         abort(403)
