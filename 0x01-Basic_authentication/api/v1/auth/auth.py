@@ -36,7 +36,7 @@ class Auth:
         if not request:
             return None
 
-        auth_header = request.get("Authorization")
+        auth_header = request.headers.get("Authorization")
         if not auth_header:
             return None
         return auth_header

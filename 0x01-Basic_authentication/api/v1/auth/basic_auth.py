@@ -43,9 +43,10 @@ class BasicAuth(Auth):
             return None
         try:
             decoded_data = base64.b64decode(base64_authorization_header)
+            decoded_str = decoded_data.decode("utf-8")
         except Exception:
             return None
-        return decoded_data.decode("utf-8")
+        return decoded_str
 
     def extract_user_credentials(
         self, decoded_base64_authorization_header: str
@@ -83,3 +84,23 @@ class BasicAuth(Auth):
             return None
 
         return user
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        if not request:
+            return None
+        auth_header = self.authorization_header(request)
+        if not auth_header:
+            return None
+        encoded = self.extract_base64_authorization_header(auth_header)
+        if not encoded:
+            return None
+        decoded = self.decode_base64_authorization_header(encoded)
+        if not decoded:
+            return None
+        user_cred = self.extract_user_credentials(decoded)
+        if not user_cred:
+            return None
+        user_object = self.user_object_from_credentials(
+            user_cred[0], user_cred[1]
+        )
+        return user_object
