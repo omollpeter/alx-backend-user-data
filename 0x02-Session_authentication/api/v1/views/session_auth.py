@@ -5,7 +5,7 @@ Defines route to handle user login and creates asession
 
 
 from api.v1.views import app_views
-from flask import request, jsonify
+from flask import request, jsonify, abort
 import os
 from models.user import User
 
@@ -37,3 +37,17 @@ def login():
     cookie_name = os.getenv("SESSION_NAME")
     output.set_cookie(cookie_name, str(session_id))
     return output
+
+
+@app_views.route(
+    "/auth_session/logout", methods=["DELETE"], strict_slashes=False
+)
+def logout_user():
+    """
+    Logouts a user and deletes the session
+    """
+    from api.v1.app import auth
+    destroy = auth.destroy_session(request)
+    if not destroy:
+        abort(404)
+    return jsonify({}), 200
