@@ -1,4 +1,7 @@
-#!/usr/bin/env
+#!/usr/bin/env python3
+"""
+Defines route to handle user login and creates asession
+"""
 
 
 from api.v1.views import app_views
