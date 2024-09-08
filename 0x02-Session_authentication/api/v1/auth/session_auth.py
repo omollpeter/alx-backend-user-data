@@ -46,6 +46,7 @@ class SessionAuth(Auth):
         if not session_id:
             return None
         user_id = self.user_id_for_session_id(session_id)
+        print(user_id)
         if not user_id:
             return None
         return User.get(user_id)
