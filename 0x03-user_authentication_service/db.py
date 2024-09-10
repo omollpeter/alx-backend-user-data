@@ -79,3 +79,25 @@ class DB:
             if user:
                 return user
         raise NoResultFound()
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        Updates a user in the database
+        """
+        user = self.find_user_by(id=user_id)
+        if not user:
+            return None
+
+        attributes = ["email", "hashed_password", "session_d", "reset_token"]
+        for key, value in kwargs.items():
+            if key not in attributes:
+                raise ValueError()
+            if key == "email":
+                user.email = value
+            elif key == "hashed_password":
+                user.hashed_password = value
+            elif key == "session_id":
+                user.session_id = value
+            elif key == "reset_token":
+                user.reset_token = value
+        self._session.commit()
