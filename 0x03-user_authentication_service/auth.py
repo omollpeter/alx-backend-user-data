@@ -120,7 +120,8 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(reset_token=reset_token)
-            user.hashed_password = _hash_password(password)
+            h_password = _hash_password(password)
+            user.hashed_password = h_password
             self._db._session.commit()
             return None
         except NoResultFound:
