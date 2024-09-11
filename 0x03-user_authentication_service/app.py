@@ -16,9 +16,17 @@ AUTH = Auth()
 @app.errorhandler(401)
 def unauthorized(error):
     """
-    Hnadles unautrhorized access
+    Hnadles unauthorized access
     """
     return jsonify({"error": "Wrong username or password"}), 401
+
+
+@app.errorhandler(403)
+def unauthorized(error):
+    """
+    Hnadles Forbidden error
+    """
+    return jsonify({"error": "Forbidden"}), 403
 
 
 @app.route("/", methods=["GET"], strict_slashes=False)
@@ -86,6 +94,8 @@ def profile():
     Returns the current user
     """
     session_id = request.cookies.get("session_id")
+    if not session_id:
+        abort(403)
     user = AUTH.get_user_from_session_id(session_id)
     if not user:
         abort(403)
