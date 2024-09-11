@@ -52,7 +52,7 @@ class DB:
         Returns the first user based on given arguments
         """
         attributes = [
-            "email", "id", "hashed_password", "session_d", "reset_token"
+            "email", "id", "hashed_password", "session_id", "reset_token"
         ]
         for key in kwargs.keys():
             if key not in attributes:
@@ -89,7 +89,7 @@ class DB:
         if not user:
             return None
 
-        attributes = ["email", "hashed_password", "session_d", "reset_token"]
+        attributes = ["email", "hashed_password", "session_id", "reset_token"]
         for key, value in kwargs.items():
             if key not in attributes:
                 raise ValueError()
